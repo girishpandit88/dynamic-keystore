@@ -30,7 +30,7 @@ Then you can get your configs dynamically using something like below
 
 ```java
 ConfigService _service = injector.getInstance(ConfigService)
-_service.getConfig("service_name","service_environment", "key").get()
+String propertyAsString = _service.getConfig("service_name","service_environment", "key").get()
 ```
 
 You can also get a TypeSafe Config object as a config property
