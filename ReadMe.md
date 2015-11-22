@@ -16,7 +16,7 @@ Then in you pom.xml include it as a dependency
 <dependency>
 	<groupId>com.gp.dynamic-keystore</groupId>
     <artifactId>dynamic-keystore</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
