@@ -29,20 +29,20 @@ Guice.createInjector(new DynamicKeystoreModule("", ""));
 Then you can get your configs dynamically using something like below
 
 ```java
-ConfigService _service = injector.getInstance(ConfigService)
-String propertyAsString = _service.getConfig("service_name","service_environment", "key").get()
+ConfigService _service = injector.getInstance(ConfigService.class);
+String propertyAsString = _service.getConfig("service_name","service_environment", "key").get();
 ```
 
 You can also get a TypeSafe Config object as a config property
 
 ```java
-Config propertiesAsTypeSafeConfig = _service.getConfigs("service_name", "service_environment").get()
+Config propertiesAsTypeSafeConfig = _service.getConfigs("service_name", "service_environment").get();
 ```
 
 To save config you can use
 
 ```java
-_service.putConfig("service_name", "service_environment", "key", "value")
+_service.putConfig("service_name", "service_environment", "key", "value");
 ```
 
 Since value is a String, you can even save your keystore/crt/pfx files and retrieve them.
@@ -50,5 +50,5 @@ Since value is a String, you can even save your keystore/crt/pfx files and retri
 To delete config, use
 
 ```java
-_service.deleteConfig("service_name", "service_environment", "key")
+_service.deleteConfig("service_name", "service_environment", "key");
 ```
