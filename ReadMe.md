@@ -47,6 +47,10 @@ _service.putConfig("service_name", "service_environment", "key", "value");
 
 Since value is a String, you can even save your keystore/crt/pfx files and retrieve them.
 
+```java
+_service.setConfig("local","dev","config.file",config.getConfig("dynamo").toString());
+```
+
 To delete config, use
 
 ```java
