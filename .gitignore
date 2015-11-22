@@ -24,7 +24,7 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .DS_Store
-etc/.vagrant
+dib/.vagrant
 .idea
 *.iml
 
