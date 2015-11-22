@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Example {
 	/***
-	 * Prior to running this main class please read etc/ReadMe.md
+	 * Prior to running this main class please read dib/ReadMe.md
 	 */
 	public static void main(String[] args) {
 		Config config = ConfigFactory.load();
