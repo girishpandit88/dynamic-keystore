@@ -23,9 +23,9 @@ public class Example {
 			_service.setConfig("test","dev","db"+i+".password","admin");
 
 		}
-		_service.setConfig("local","dev","config",config.getConfig("dynamo").toString());
+		_service.setConfig("local","dev","config.file",config.getConfig("dynamo").toString());
 
-		assert _service.getConfigs("local","dev").get().getConfigList("config").size()==2;
+		assert _service.getConfigs("local","dev").get().getConfigList("config.file").size()==2;
 		assert "admin".equalsIgnoreCase(_service.getConfig("test","dev","db1.user").get());
 
 		log.info(_service.getConfigs("test","dev").get().toString());
