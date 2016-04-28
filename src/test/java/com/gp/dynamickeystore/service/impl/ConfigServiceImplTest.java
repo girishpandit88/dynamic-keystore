@@ -58,4 +58,12 @@ public class ConfigServiceImplTest {
 		doNothing().when(keystoreAccess).deleteConfig(Mockito.anyString(),Mockito.anyString());
 		_service.deleteConfig("test","test","user");
 	}
+
+	@Test
+	public void someLongRunningTest() throws Exception{
+		Thread.sleep(300000L);
+		when(keystoreAccess.getConfig(Mockito.anyString(),
+				Mockito.anyString())).thenReturn(Optional.of("mocked value"));
+		assertEquals("mocked value",_service.getConfig("abc","def","user").get());
+	}
 }
