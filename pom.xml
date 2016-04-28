@@ -8,7 +8,7 @@
     <artifactId>dynamic-keystore</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 	<properties>
-		<skipTests>true</skipTests>
+		<skipTests>false</skipTests>
 	</properties>
     <dependencies>
         <dependency>
@@ -59,6 +59,48 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.8</version>
+				<executions>
+					<execution>
+						<id>unpack-dynamodb-local</id>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.jcabi</groupId>
+									<artifactId>DynamoDBLocal</artifactId>
+									<version>2013-09-12</version>
+									<type>zip</type>
+									<outputDirectory>${project.build.directory}/dynamodb-dist</outputDirectory>
+									<overWrite>false</overWrite>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9.1</version>
+				<executions>
+					<execution>
+						<id>reserver-dynamodb-port</id>
+						<goals>
+							<goal>reserve-network-port</goal>
+						</goals>
+						<configuration>
+							<portNames>
+								<portName>dynamodblocal.port</portName>
+							</portNames>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
@@ -89,6 +131,51 @@
 						<versionTagPrefix>dynamicKeystore-</versionTagPrefix>
 					</flowInitContext>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.jcabi</groupId>
+				<artifactId>jcabi-dynamodb-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>start</goal>
+							<goal>stop</goal>
+						</goals>
+						<configuration>
+							<port>${dynamodblocal.port}</port>
+							<dist>${project.build.directory}/dynamodb-dist</dist>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<systemPropertyVariables>
+						<dynamodb.port>${dynamodblocal.port}</dynamodb.port>
+					</systemPropertyVariables>
+					<groups>com.gp.dynamickeystore.access.impl.IntegrationTest</groups>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.jcabi</groupId>
+				<artifactId>jcabi-dynamodb-maven-plugin</artifactId>
+				<version>0.7.2</version>
+				<configuration>
+					<tables>
+						<table>${basedir}/src/test/resources/Keystore.json</table>
+					</tables>
+					<dist>${project.build.directory}/dynamodb-dist</dist>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>start</goal>
+							<goal>create-tables</goal>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
